@@ -1,0 +1,7 @@
+on square_root(the_number)
+	return the_number ^ 0.5
+end square_root
+
+set the_root to square_root(25)
+the_root equal to 5.0
+

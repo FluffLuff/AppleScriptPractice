@@ -1,0 +1,30 @@
+(* Tidy Desktop
+
+ABOUT
+This script creates a new folder in your home directory with the name Desktop Arhive of + the current date, then moves all files (not folders) from your desktop into said folder.
+If you have already made a folder for that day, it will prompt you to enter a new name for the folder with the name defaulting to the current date + _new.
+*)
+
+set date_string to date string of (current date)
+set folder_name to "Desktop Archive for " & date_string
+
+
+try
+	tell application "Finder"
+		set archive_folder to make new folder at home ¬
+			with properties {name:folder_name}
+		move every file of desktop to archive_folder
+	end tell
+on error
+	
+	set errorDialog to display dialog "This directory already exists! Please enter an alternate name: " default answer (date_string & "_new") with icon note buttons {"Cancel", "Continue"} default button "Continue"
+	set newFolderName to (text returned of errorDialog)
+	tell application "Finder"
+		set archive_folder to make new folder at home ¬
+			with properties {name:newFolderName}
+		move every file of desktop to archive_folder
+	end tell
+end try
+
+	
+	
